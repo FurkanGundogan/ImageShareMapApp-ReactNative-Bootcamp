@@ -52,10 +52,9 @@ const MapScreen = () => {
   const {top} = useSafeAreaInsets();
   const user = useSelector(state => state.auth.user);
   const [users, setUsers] = useState([]);
+
   const {navigate} = useNavigation();
-  const [locations, setLocations] = useState<
-    {latitude: number; longitude: number}[]
-  >([]);
+  const [locations, setLocations] = useState([]);
   const [lastLocation, setLastLocation] = useState(null);
   const mapRef = useRef();
 
@@ -150,9 +149,10 @@ const MapScreen = () => {
             long={lastLocation.coords.longitude}
           />
         ) : null}
-        {users.map(userItem => {
+        {users.map((userItem,index) => {
           return (
             <CustomMarker
+              key={index}
               user={userItem}
               lat={userItem.currentLocation.latitude}
               long={userItem.currentLocation.longitude}

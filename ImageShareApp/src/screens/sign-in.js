@@ -17,7 +17,7 @@ export const SignInScreen = () => {
     formState: {errors},
   } = useForm({
     defaultValues: {
-      email: 'furkangundogan1414@gmail.com',
+      email: 'ff@gmail.com',
       password: '123123',
     },
   });
@@ -84,17 +84,6 @@ export const SignInScreen = () => {
 
       <Button onPress={handleSubmit(handleSignIn)} style={{marginVertical: 16}}>
         <Text color={'white'}>Sign In</Text>
-      </Button>
-
-      <Text>Did you forget your pasword?</Text>
-
-      <Button
-        variant={'ghost'}
-        mb={6}
-        onPress={() => {
-          navigate('ForgotPassword');
-        }}>
-        <Text>Reset Password</Text>
       </Button>
 
       <Button
