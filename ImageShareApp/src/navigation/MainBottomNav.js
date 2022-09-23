@@ -6,7 +6,9 @@ import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityI
 //import useTheme from '../hooks/useTheme';
 import HomeStackNav from "./HomeStackNav";
 import MapNavigator from "./MapNavigator";
-
+import ProfileStackNav from "./ProfileStackNav";
+import { AntDesign } from '@expo/vector-icons'; 
+import { FontAwesome } from '@expo/vector-icons'; 
 const Tab = createBottomTabNavigator();
 const MainBottomNav = () => {
   // const {theme} = useTheme();
@@ -51,31 +53,22 @@ const MainBottomNav = () => {
           ),
         }}
       />
-      {/*
       <Tab.Screen
-        name="SearchStackNav"
-        
-        component={SearchStackNav}
-        options={{
-          headerShown:false,
-          title: "Search",
-          tabBarIcon: () => (
-            <IconSearch name="search" size={28} style={theme?.tabBarIcon} />
-          ),
-        }}
-      />
-      <Tab.Screen
-        name="ProfileStackNav"
+        name="ProfileStack"
         component={ProfileStackNav}
         options={{
           title: "Profile",
           headerShown:false,
           tabBarIcon: () => (
-            <IconSearch name="user" size={28} style={theme?.tabBarIcon} />
+            <FontAwesome
+              name="user"
+              size={28}
+              style={theme?.tabBarIcon}
+            />
           ),
         }}
       />
-    */}
+      
     </Tab.Navigator>
   );
 };

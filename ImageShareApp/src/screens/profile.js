@@ -9,8 +9,10 @@ import * as ImagePicker from 'expo-image-picker';
 import {db, storage} from '../utils/firebase';
 import {addDoc, collection, doc, updateDoc} from 'firebase/firestore';
 import {useDispatch, useSelector} from 'react-redux';
-import {updateUser} from '../utils/store';
+import {logOut, updateUser} from '../utils/store';
 import {useNavigation} from '@react-navigation/native';
+import { StyleSheet, TouchableOpacity } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export const ProfileScreen = () => {
   const user = useSelector(state => state.auth.user);
@@ -72,15 +74,20 @@ export const ProfileScreen = () => {
       photoURL: image,
     }).then(response => {
       dispatch(updateUser({...data, photoURL: image}));
-
-      goBack();
+      alert('Update Successfull')
     });
+  };
+
+  const logout = async () => {
+    dispatch(logOut());
+    await AsyncStorage.removeItem("@user");
   };
 
   return (
     <View
+    backgroundColor={"white"}
       p={4}
-      mt={12}
+      height={"100%"}
       display="flex"
       flexDir={'column'}
       justifyContent="center"
@@ -125,6 +132,24 @@ export const ProfileScreen = () => {
       <Button my={2} onPress={handleSubmit(handleSubmitProfile)}>
         <Text color={'white'}>Update Profile</Text>
       </Button>
+      <TouchableOpacity style={styles.logoutButton} onPress={logout}>
+        <Text style={styles.logoutText}>LOGOUT</Text>
+      </TouchableOpacity>
     </View>
   );
 };
+const styles = StyleSheet.create({
+ logoutButton:{
+  position:"absolute",
+  backgroundColor:"red",
+  padding:16,
+  paddingTop:8,
+  paddingBottom:8,
+  borderRadius:8,
+  bottom:16
+ },
+ logoutText:{
+  color:"white",
+  fontWeight:"600"
+ }
+})
