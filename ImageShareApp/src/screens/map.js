@@ -1,6 +1,6 @@
-import {Button, Image, Text, View} from 'native-base';
+import {Image, Text, View} from 'native-base';
 import React, {useEffect, useRef, useState} from 'react';
-import {Dimensions, StyleSheet, Alert} from 'react-native';
+import {Dimensions, StyleSheet, Alert, Button, TouchableOpacity} from 'react-native';
 
 import MapView, {Marker, Polyline} from 'react-native-maps';
 
@@ -18,19 +18,21 @@ import {useSelector} from 'react-redux';
 import {useNavigation} from '@react-navigation/native';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 
-const CustomMarker = ({user, lat, long}) => (
+const CustomMarker = ({image, lat, long,navigation,email}) => (
   <Marker
+  onPress={()=>navigation.navigate('Image',{image:image?.url,lat,long,email})}
     coordinate={{
       latitude: lat,
       longitude: long,
     }}>
-    {user.photoURL ? (
+    {image.url ? (
       <Image
+      alt="marker"
         borderColor="blue.200"
         w={12}
         h={12}
         rounded="full"
-        source={{uri: user.photoURL}}
+        source={{uri: image.url}}
       />
     ) : (
       <View
@@ -49,17 +51,19 @@ const CustomMarker = ({user, lat, long}) => (
 );
 
 const MapScreen = () => {
+
   const {top} = useSafeAreaInsets();
   const user = useSelector(state => state.auth.user);
   const [users, setUsers] = useState([]);
-
-  const {navigate} = useNavigation();
+  const [images, setImages] = useState([]);
   const [locations, setLocations] = useState([]);
   const [lastLocation, setLastLocation] = useState(null);
   const mapRef = useRef();
-
+  console.log("image list:",images?.length)
+  const navgiation=useNavigation()
   useEffect(() => {
     getUsers();
+    getImages()
   }, []);
 
   useEffect(() => {
@@ -73,6 +77,15 @@ const MapScreen = () => {
       setUsers(_users);
     });
   };
+
+  const getImages = async () => {
+    const q = query(collection(db, 'images'));
+    await getDocs(q).then(res => {
+      const allImages = res.docs.map(item => item.data());
+      setImages(allImages);
+    });
+  };
+
 
   const updateUsersCurrentLocation = async location => {
     const docRef = doc(db, 'user', user.id);
@@ -121,18 +134,11 @@ const MapScreen = () => {
     getCurrentLocation();
   }, []);
 
+
+
   return (
     <View style={{paddingTop: top}}>
-      <Button
-        position={'absolute'}
-        top={12}
-        right={12}
-        zIndex={888}
-        onPress={() => {
-          navigate('Profile');
-        }}>
-        <Text color="white">Profile</Text>
-      </Button>
+      
       <MapView
         showsMyLocationButton
         mapType="satellite"
@@ -142,24 +148,22 @@ const MapScreen = () => {
         style={styles.map}
         minZoomLevel={15}>
         <Polyline coordinates={locations} strokeWidth={6} strokeColor="black" />
-        {lastLocation ? (
-          <CustomMarker
-            user={user}
-            lat={lastLocation.coords.latitude}
-            long={lastLocation.coords.longitude}
-          />
-        ) : null}
-        {users.map((userItem,index) => {
+        {images?.map((imageItem,index) => {
           return (
             <CustomMarker
               key={index}
-              user={userItem}
-              lat={userItem.currentLocation.latitude}
-              long={userItem.currentLocation.longitude}
+              image={imageItem}
+              lat={imageItem?.location?.coords?.latitude}
+              long={imageItem?.location?.coords?.longitude}
+              navigation={navgiation}
+              email={imageItem?.email}
             />
           );
-        })}
+        })}   
       </MapView>
+      <TouchableOpacity style={styles.refreshButton} onPress={()=>getImages()} >
+        <Text style={styles.refreshButtonText}>REFRESH</Text>
+        </TouchableOpacity>
     </View>
   );
 };
@@ -167,8 +171,23 @@ const MapScreen = () => {
 const styles = StyleSheet.create({
   map: {
     width: Dimensions.get('screen').width,
-    height: Dimensions.get('screen').height,
+    height: Dimensions.get('screen').height-50,
   },
+  refreshButton:{
+    position:"absolute",
+    bottom:120,
+    justifyContent:"center",
+    paddingTop:8,
+    paddingBottom:8,
+    paddingLeft:16,
+    paddingRight:16,
+    backgroundColor:"black",
+    borderRadius:4,
+    alignSelf :"center"
+  },
+  refreshButtonText:{
+    color:"white",textAlign:"center",fontWeight:"800"
+  }
 });
 
 export default MapScreen;

@@ -5,6 +5,7 @@ import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityI
 
 //import useTheme from '../hooks/useTheme';
 import HomeStackNav from "./HomeStackNav";
+import MapNavigator from "./MapNavigator";
 
 const Tab = createBottomTabNavigator();
 const MainBottomNav = () => {
@@ -29,6 +30,21 @@ const MainBottomNav = () => {
           tabBarIcon: () => (
             <MaterialCommunityIcons
               name="home"
+              size={28}
+              style={theme?.tabBarIcon}
+            />
+          ),
+        }}
+      />
+      <Tab.Screen
+        name="MapNavigatior"
+        component={MapNavigator}
+        options={{
+          title: "Map",
+          headerShown:false,
+          tabBarIcon: () => (
+            <MaterialCommunityIcons
+              name="map"
               size={28}
               style={theme?.tabBarIcon}
             />

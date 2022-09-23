@@ -18,12 +18,10 @@ const Auth = () => {
   const getUserFromLocal = async () => {
     const value = await AsyncStorage.getItem("@user");
     
-    console.log("local val:", value);
+   
     if (value !== null) {
       let myval = JSON.parse(value);
       const { email, password } = myval;
-      console.log("local email:", email);
-      console.log("password:", password);
 
       signInWithEmailAndPassword(auth, email, password).then((response) => {
         //console.log("response:", response);
