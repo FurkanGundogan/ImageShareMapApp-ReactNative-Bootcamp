@@ -1,5 +1,5 @@
 #### React Native Bootcamp Assingment-6 Image Share App
-##### Description: This app provides account management, image sharing and image displaying on map view to users via firebase.
+##### Description: This app provides account management, location based image sharing and image displaying on map-view via firebase.
 ##### Features:
 ###### [Expo](https://expo.dev/) This project created with Expo.
 ###### [React Navigation](https://reactnavigation.org/docs/hello-react-navigation/) used for routing (Stack and BottomTab).
