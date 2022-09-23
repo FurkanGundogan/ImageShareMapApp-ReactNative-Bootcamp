@@ -21,7 +21,7 @@ const authSlice = createSlice({
   },
 });
 
-export const {signIn, updateUser} = authSlice.actions;
+export const {signIn, updateUser,logOut} = authSlice.actions;
 
 export const store = configureStore({
   reducer: {

@@ -9,6 +9,7 @@ import {useNavigation} from '@react-navigation/native';
 import {useForm, Controller} from 'react-hook-form';
 import {Button, Input, Text, View, useToast} from 'native-base';
 import {doc, getDoc} from 'firebase/firestore';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export const SignInScreen = () => {
   const {
@@ -32,6 +33,7 @@ export const SignInScreen = () => {
         const userRef = await getDoc(userDoc);
         if (userRef.exists()) {
           dispatch(signIn(userRef.data()));
+          submitUserToLocal({email:data.email,password:data.password})
         }
       })
       .catch(err => {
@@ -41,6 +43,13 @@ export const SignInScreen = () => {
       });
   };
 
+  const submitUserToLocal = async (data) => {
+    const backupinfo = { ...data };
+    const jsonValue = JSON.stringify(backupinfo);
+    console.log("locale atanan:",jsonValue)
+    await AsyncStorage.setItem("@user", jsonValue);
+    
+  }; 
   return (
     <View p={4}>
       <Controller

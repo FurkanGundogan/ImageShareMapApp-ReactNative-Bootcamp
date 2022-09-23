@@ -5,9 +5,10 @@ import {NativeBaseProvider} from 'native-base';
 import {Provider} from 'react-redux';
 
 import {store} from './src/utils/store';
-import MainNavigator from './src/navigation/mainNavigator';
+
 import {NavigationContainer} from '@react-navigation/native';
-import {SafeAreaProvider} from 'react-native-safe-area-context';
+
+import Auth from './src/screens/Auth';
 
 export default function App() {
   return (
@@ -16,7 +17,7 @@ export default function App() {
         <NativeBaseProvider>
           <NavigationContainer>
             <StatusBar style="auto" />
-            <MainNavigator />
+            <Auth/>
           </NavigationContainer>
         </NativeBaseProvider>
      
