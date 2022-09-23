@@ -129,7 +129,7 @@ export const ProfileScreen = () => {
         )}
       />
 
-      <Button my={2} onPress={handleSubmit(handleSubmitProfile)}>
+      <Button my={2} backgroundColor={'#0c5f9c'} onPress={handleSubmit(handleSubmitProfile)}>
         <Text color={'white'}>Update Profile</Text>
       </Button>
       <TouchableOpacity style={styles.logoutButton} onPress={logout}>

@@ -53,7 +53,7 @@ export const SignUpScreen = () => {
         )}
       />
 
-      <Button my={2} onPress={handleSubmit(handleSignUp)}>
+      <Button my={2} onPress={handleSubmit(handleSignUp)} backgroundColor={'#0c5f9c'}>
         <Text color={'white'}>Sign Up</Text>
       </Button>
     </View>

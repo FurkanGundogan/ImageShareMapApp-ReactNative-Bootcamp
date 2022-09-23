@@ -59,7 +59,7 @@ const MapScreen = () => {
   const [locations, setLocations] = useState([]);
   const [lastLocation, setLastLocation] = useState(null);
   const mapRef = useRef();
-  console.log("image list:",images?.length)
+
   const navgiation=useNavigation()
   useEffect(() => {
     getUsers();
@@ -181,7 +181,7 @@ const styles = StyleSheet.create({
     paddingBottom:8,
     paddingLeft:16,
     paddingRight:16,
-    backgroundColor:"black",
+    backgroundColor:"#0c5f9c",
     borderRadius:4,
     alignSelf :"center"
   },

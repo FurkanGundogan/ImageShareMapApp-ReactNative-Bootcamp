@@ -10,7 +10,9 @@ import {useForm, Controller} from 'react-hook-form';
 import {Button, Input, Text, View, useToast} from 'native-base';
 import {doc, getDoc} from 'firebase/firestore';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-
+import { StyleSheet } from 'react-native';
+import { Entypo } from '@expo/vector-icons'; 
+import { MaterialIcons } from '@expo/vector-icons'; 
 export const SignInScreen = () => {
   const {
     control,
@@ -18,7 +20,7 @@ export const SignInScreen = () => {
     formState: {errors},
   } = useForm({
     defaultValues: {
-      email: 'ff@gmail.com',
+      email: 'furkangundogan1414@gmail.com',
       password: '123123',
     },
   });
@@ -51,7 +53,11 @@ export const SignInScreen = () => {
     
   }; 
   return (
-    <View p={4}>
+    <View p={4} style={styles.container}>
+      <View style={styles.titleWrapper}>
+      <MaterialIcons name="insert-photo"  size={48} style={styles.galleryIcon} color="#0c5f9c" />
+        <Text style={styles.titleText}>IMAGE SHARE APP</Text>
+      </View>
       <Controller
         name="email"
         control={control}
@@ -91,7 +97,7 @@ export const SignInScreen = () => {
         }}
       />
 
-      <Button onPress={handleSubmit(handleSignIn)} style={{marginVertical: 16}}>
+      <Button onPress={handleSubmit(handleSignIn)} style={{marginVertical: 16,backgroundColor:'#0c5f9c'}}>
         <Text color={'white'}>Sign In</Text>
       </Button>
 
@@ -105,3 +111,22 @@ export const SignInScreen = () => {
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  container:{
+    backgroundColor:"white",flex:1
+  },
+  titleWrapper:{
+    marginTop:32,
+    padding:8,
+    borderRadius:2,
+    justifyContent:"center",
+    alignItems:"center"
+  },
+  titleText:{
+    color:"#0c5f9c",
+    textAlign:"center",
+    fontWeight:"800",
+    fontSize:18
+  }
+})
