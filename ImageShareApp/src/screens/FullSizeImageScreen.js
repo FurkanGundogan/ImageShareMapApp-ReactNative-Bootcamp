@@ -8,13 +8,14 @@ const FullSizeImageScreen = () => {
   const {image,lat,long,email} = route?.params
 
   return (
-    <SafeAreaView>
+    <SafeAreaView style={styles.container}>
+      <View style={{flexDirection:"row",justifyContent:"center",marginTop:16}}>
+      <Text style={styles.from}>From</Text>
+      <Text style={styles.email}> {email}</Text>
+      </View>
       <View style={styles.imageContainer}>
         <Image style={styles.image} source={{ uri: image }} />
       </View>
-      <Text>Image Details</Text>
-      <Text>Owner: {email}</Text>
-      <Text>Location: {lat}-{long}</Text>
     </SafeAreaView>
   )
 }
@@ -22,9 +23,13 @@ const FullSizeImageScreen = () => {
 export default FullSizeImageScreen
 
 const styles = StyleSheet.create({
+  container:{
+    backgroundColor:"white",
+    flex:1
+  },
   imageContainer: {
     width: "100%",
-    height: "90%",
+    height: "95%",
     overflow: "hidden",
     borderWidth: 1,
     borderColor: "black",
@@ -32,5 +37,14 @@ const styles = StyleSheet.create({
   image: {
     width: "100%",
     height: "100%",
+  },from:{
+    textAlign:"center",
+    color:"black",
+    fontWeight:"600"
   },
+  email:{
+    textAlign:"center",
+    color:"blue",
+    fontWeight:"600"
+  }
 })
